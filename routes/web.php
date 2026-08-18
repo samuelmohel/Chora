@@ -194,15 +194,20 @@ Route::get('/switch-repo', function() {
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\ChoraChartOfAccountSeeder', '--force' => true]);
         $seedOutput = \Illuminate\Support\Facades\Artisan::output();
 
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+
         return response()->json([
             'status' => 'success',
-            'message' => 'Repository successfully switched to https://github.com/samuelmohel/Chora.git and updated!',
+            'message' => 'Repository successfully switched to https://github.com/samuelmohel/Chora.git, updated, and cache cleared!',
             'remote_set_output' => $cmd1,
             'fetch_output' => $cmd2,
             'reset_output' => $cmd3,
             'migration_output' => $migrateOutput,
             'seeder_output' => $seedOutput,
         ]);
+
     } catch (\Exception $e) {
         return response()->json([
             'status' => 'error',
