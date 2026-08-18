@@ -1,0 +1,40 @@
+[01-Jan-2026 06:50:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/database.php on line 19
+[01-Jan-2026 06:50:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/mail.php on line 17
+[01-Jan-2026 06:50:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/app.php on line 16
+[01-Jan-2026 06:50:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/services.php on line 18
+[01-Jan-2026 06:51:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/app.php on line 16
+[01-Jan-2026 06:51:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/database.php on line 19
+[01-Jan-2026 06:51:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/mail.php on line 17
+[01-Jan-2026 06:51:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/mail.php on line 17
+[01-Jan-2026 06:51:54 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/database.php on line 19
+[01-Jan-2026 06:51:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/choracom/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/choracom/public_html/config/services.php on line 18
