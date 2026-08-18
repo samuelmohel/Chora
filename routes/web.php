@@ -181,6 +181,37 @@ Route::get('/run-chora-setup', function() {
     }
 });
 
+// Route to switch git remote to your repository and pull latest changes
+Route::get('/switch-repo', function() {
+    try {
+        $cmd1 = shell_exec('git remote set-url origin https://github.com/samuelmohel/Chora.git 2>&1');
+        $cmd2 = shell_exec('git fetch origin main 2>&1');
+        $cmd3 = shell_exec('git reset --hard origin/main 2>&1');
+        
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
+        
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\ChoraChartOfAccountSeeder', '--force' => true]);
+        $seedOutput = \Illuminate\Support\Facades\Artisan::output();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Repository successfully switched to https://github.com/samuelmohel/Chora.git and updated!',
+            'remote_set_output' => $cmd1,
+            'fetch_output' => $cmd2,
+            'reset_output' => $cmd3,
+            'migration_output' => $migrateOutput,
+            'seeder_output' => $seedOutput,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+});
+
+
 
 
 // auto invoice
