@@ -86,6 +86,10 @@ use App\Http\Controllers\ReferralProgramController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\AnnualBillingController;
+use App\Http\Controllers\DeferredDuesController;
+use App\Http\Controllers\ResidentStatementController;
+use App\Http\Controllers\BankReconciliationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -145,6 +149,15 @@ Route::get('/invoice/generate-monthly', [InvoiceController::class, 'generateMont
     'auth',
     'XSS'
 ]);
+
+// CHORA Estate Connected Accounting Routes
+Route::resource('annual-billing', AnnualBillingController::class)->middleware(['auth', 'XSS']);
+Route::get('deferred-dues', [DeferredDuesController::class, 'index'])->name('deferred-dues.index')->middleware(['auth', 'XSS']);
+Route::post('deferred-dues/recognize', [DeferredDuesController::class, 'recognize'])->name('deferred-dues.recognize')->middleware(['auth', 'XSS']);
+Route::get('resident-statement/{id}', [ResidentStatementController::class, 'show'])->name('resident-statement.show')->middleware(['auth', 'XSS']);
+Route::resource('bank-reconciliation', BankReconciliationController::class)->middleware(['auth', 'XSS']);
+Route::post('bank-reconciliation/{id}/sign-off', [BankReconciliationController::class, 'signOff'])->name('bank-reconciliation.sign-off')->middleware(['auth', 'XSS']);
+
 
 // auto invoice
 Route::get('/invoice/auto', [InvoiceController::class, 'autoInvoice'])->name('invoice.autoInvoice');
