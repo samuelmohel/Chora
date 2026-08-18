@@ -158,6 +158,30 @@ Route::get('resident-statement/{id}', [ResidentStatementController::class, 'show
 Route::resource('bank-reconciliation', BankReconciliationController::class)->middleware(['auth', 'XSS']);
 Route::post('bank-reconciliation/{id}/sign-off', [BankReconciliationController::class, 'signOff'])->name('bank-reconciliation.sign-off')->middleware(['auth', 'XSS']);
 
+// Browser-based setup route to run migrations & seeders on cPanel without Terminal
+Route::get('/run-chora-setup', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
+        
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\ChoraChartOfAccountSeeder', '--force' => true]);
+        $seedOutput = \Illuminate\Support\Facades\Artisan::output();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'CHORA Accounting Database Setup Completed!',
+            'migration_output' => $migrateOutput,
+            'seeder_output' => $seedOutput,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+});
+
+
 
 // auto invoice
 Route::get('/invoice/auto', [InvoiceController::class, 'autoInvoice'])->name('invoice.autoInvoice');
