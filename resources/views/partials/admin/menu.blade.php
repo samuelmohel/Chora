@@ -54,6 +54,29 @@
                     @endif
                     {{-- @endcan --}}
                 </li>
+
+                {{-- -------  CHORA Estate Accounting ---------- --}}
+                @if (!\Auth::guard('customer')->check() && !\Auth::guard('vender')->check())
+                    <li class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['annual-billing', 'deferred-dues', 'bank-reconciliation']) ? ' active dash-trigger' : '' }}">
+                        <a href="#!" class="dash-link">
+                            <span class="dash-micon"><i class="ti ti-calculator"></i></span>
+                            <span class="dash-mtext">{{ __('Estate Accounting') }}</span>
+                            <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
+                        </a>
+                        <ul class="dash-submenu">
+                            <li class="dash-item {{ Request::segment(1) == 'annual-billing' ? ' active' : '' }}">
+                                <a class="dash-link" href="{{ route('annual-billing.index') }}">{{ __('Annual Dues Billing') }}</a>
+                            </li>
+                            <li class="dash-item {{ Request::segment(1) == 'deferred-dues' ? ' active' : '' }}">
+                                <a class="dash-link" href="{{ route('deferred-dues.index') }}">{{ __('Deferred Dues Release') }}</a>
+                            </li>
+                            <li class="dash-item {{ Request::segment(1) == 'bank-reconciliation' ? ' active' : '' }}">
+                                <a class="dash-link" href="{{ route('bank-reconciliation.index') }}">{{ __('Bank Reconciliation') }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+
                 
                 @if (\Auth::guard('customer')->check())
                     <li class="dash-item">
