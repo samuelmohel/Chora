@@ -213,8 +213,28 @@ Route::get('/switch-repo', function() {
             'status' => 'error',
             'message' => $e->getMessage()
         ], 500);
+// Diagnostic Route to inspect production error log & file status
+Route::get('/chora-diag', function() {
+    $logFile = storage_path('logs/laravel.log');
+    $lastLogLines = [];
+
+    if (file_exists($logFile)) {
+        $lines = file($logFile);
+        $lastLogLines = array_slice($lines, -60);
     }
+
+    return response()->json([
+        'bank_reconciliation_model_exists' => file_exists(app_path('Models/BankReconciliation.php')),
+        'bank_reconciliation_view_exists' => file_exists(resource_path('views/bank_reconciliation/index.blade.php')),
+        'annual_billing_view_exists' => file_exists(resource_path('views/annual_billing/index.blade.php')),
+        'deferred_dues_view_exists' => file_exists(resource_path('views/deferred_dues/index.blade.php')),
+        'posting_service_exists' => file_exists(app_path('Services/AccountingPostingService.php')),
+        'report_service_exists' => file_exists(app_path('Services/FinancialReportService.php')),
+        'shell_exec_enabled' => function_exists('shell_exec') && !in_array('shell_exec', array_map('trim', explode(',', ini_get('disable_functions')))),
+        'latest_logs' => $lastLogLines,
+    ]);
 });
+
 
 
 
