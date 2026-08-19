@@ -214,13 +214,14 @@ Route::get('/switch-repo', function() {
             'migration_output' => $migrateOutput,
             'seeder_output' => $seedOutput,
         ]);
-
-
     } catch (\Exception $e) {
         return response()->json([
             'status' => 'error',
             'message' => $e->getMessage()
         ], 500);
+    }
+});
+
 // Diagnostic Route to inspect production error log & file status
 Route::get('/chora-diag', function() {
     $logFile = storage_path('logs/laravel.log');
@@ -242,6 +243,7 @@ Route::get('/chora-diag', function() {
         'latest_logs' => $lastLogLines,
     ]);
 });
+
 
 
 
