@@ -196,17 +196,25 @@ Route::get('/switch-repo', function() {
 
         \Illuminate\Support\Facades\Artisan::call('view:clear');
         \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('route:clear');
         \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+
+        // Force delete any cached files in bootstrap/cache/
+        foreach (glob(base_path('bootstrap/cache/*.php')) as $cacheFile) {
+            @unlink($cacheFile);
+        }
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Repository successfully switched to https://github.com/samuelmohel/Chora.git, updated, and cache cleared!',
+            'message' => 'Repository successfully switched, updated, and route/view caches completely cleared!',
             'remote_set_output' => $cmd1,
             'fetch_output' => $cmd2,
             'reset_output' => $cmd3,
             'migration_output' => $migrateOutput,
             'seeder_output' => $seedOutput,
         ]);
+
 
     } catch (\Exception $e) {
         return response()->json([
